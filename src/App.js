@@ -4,7 +4,7 @@ import Home from './pages/Home/Home';
 import TravelRecommendations from './pages/TravelRecommendations/TravelRecommendations';
 import NotFound from './pages/NotFound/NotFound';
 
-function App() {
+function App() {  
   return (
     <BrowserRouter>
       <Routes>

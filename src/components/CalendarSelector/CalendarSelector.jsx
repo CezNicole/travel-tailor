@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "./CalendarSelector.scss";
 
-export default function CalendarSelector({onDateChange}){
+export default function CalendarSelector({startDate, endDate, onDateChange}){
     // const [date, setDate] = useState(new Date());
 
     // const handleDateChange = (newDate) => {
@@ -41,7 +41,11 @@ export default function CalendarSelector({onDateChange}){
     // );
 
 
-    const [dateRange, setDateRange] = useState([new Date(), new Date()]);
+    const [dateRange, setDateRange] = useState([startDate, endDate]);
+
+    useEffect(() => {
+        setDateRange([startDate, endDate]);
+    }, [startDate, endDate]);
 
     const handleDateChange = (dates) => {
         setDateRange(dates);

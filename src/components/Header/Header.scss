@@ -1,0 +1,18 @@
+@use "../../styles/partials/colors" as *;
+@use "../../styles/partials/global" as *;
+
+.header {
+    // background-color: $red;
+    // background-color: $primary-dark-blue;
+    background-color: $steel;
+    padding: 1.5rem 1rem;
+
+    &__link {
+        text-decoration: none;
+    }
+
+    &__title {
+        color: $white;
+        // color: $light-blue;
+    }
+}

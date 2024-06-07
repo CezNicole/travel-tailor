@@ -1,15 +1,26 @@
+@use "../../styles/partials/colors" as *;
+@use "../../styles/partials/global" as *;
+
 .form {
-    &__button {
-        width: 90%;
-        font-size: 1rem;
-        padding: 0.25rem 1rem;
-        margin: 1rem auto;
+    &__selection {
+        padding: 0.5rem;
+        margin: 1rem;
         border-radius: 2rem;
+        background-color: $gray;
+        color: $primary-dark-blue;
+        font-size: 1rem;
+        font-weight: 700;
+    }
+
+    &__button {
+        @extend .form__selection;
+        width: 90%;
+        padding: 1rem;
         border: 0.125rem solid white;
     }
 
     &__button-icon {
-        width: 1.25rem;
+        width: 1.75rem;
         padding-left: 0.5rem;
     }
 }

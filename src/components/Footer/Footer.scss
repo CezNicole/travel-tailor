@@ -1,0 +1,16 @@
+@use "../../styles/partials/colors" as *;
+@use "../../styles/partials/global" as *;
+
+.footer {
+    position: relative;
+    bottom: 0;
+    margin-top: 5rem;
+    text-align: center;
+    // background-color: $red;
+    // background-color: $primary-dark-blue;
+    background-color: $steel;
+    padding: 1.5rem 1rem;
+    color: $white;
+    // color: $light-blue;
+    width: 100%;
+}

@@ -3,22 +3,10 @@ import airplaneIcon from "../../assets/icons/airplane.svg";
 import CalendarSelector from "../../components/CalendarSelector/CalendarSelector";
 import "./Home.scss";
 import axios from "axios";
+import Footer from "../../components/Footer/Footer";
+import Header from "../../components/Header/Header";
 
 export default function Home() {
-
-    
-    
-    
-    // const handleSubmit = async (event) => {
-        //     event.preventDefault();
-        //     // const response = await getTravelRecommendations(location);
-        //     // history.push({
-            //     // pathname: "/travelrecommendations",
-            //     // state: {response, duration},
-            //     // });
-            // }
-            
-            
             
     const serverUrl = process.env.REACT_APP_SERVER_URL;
     console.log(serverUrl);
@@ -58,11 +46,11 @@ export default function Home() {
 
     }, [serverUrl]);
     
-    const fetchAttractions = async (province, season) => {
+    const fetchAttractions = async () => {
         setLoading(true);
+        const season = getSeason(startDate);
         
         try {
-            const season = getSeason(startDate);
             const response = await axios.get(`${serverUrl}/api/attractions/${selectedProvince}/${season}`);
             console.log("Attractions: ", response.data);
             setAttractions(response.data);
@@ -76,18 +64,15 @@ export default function Home() {
         }
     }
 
-    // useEffect(() => {
-    //     if(selectedProvince){
-    //         const season = getSeason(startDate);
-    //         fetchAttractions(selectedProvince, season);
-    //     } else{
-    //         setAttractions([]);
-    //     }
-    // }, [selectedProvince, startDate, serverUrl]);
-
     const handleProvinceChange = (event) => {
         console.log(event.target.value);
         setSelectedProvince(event.target.value);
+
+        if (event.target.value === "") {
+            setAttractions([]);
+            setShowAttractions(false);
+            setError(null);
+        }
     }
     
     const handleDateChange = (dates) => {
@@ -95,21 +80,30 @@ export default function Home() {
         setEndDate(dates[1]);
     };
 
+    const resetForm = () => {
+        setSelectedProvince("");
+        setAttractions([]);
+        setStartDate(new Date());
+        setEndDate(new Date());
+        setShowAttractions(false);
+        setError(null);
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        // const season = getSeason(startDate);
-        // if(selectedProvince && season){
-        //     fetchAttractions(selectedProvince, season)
-        // } else{
-        //     console.log("Selected province/territory or season is undefined");
-        // }
 
-        fetchAttractions();
+        if(!selectedProvince){
+            setError("Please select a province / territory");
+            return;
+        } else {
+            fetchAttractions();
+        }
     }
 
     return(
         <>
-            <h1>Travel Tailor</h1>
+            <Header onClick={resetForm}/>
+
             <h2>Your next Canadian adventure awaits...</h2>
             <form onSubmit={handleSubmit}>
                <select
@@ -117,7 +111,6 @@ export default function Home() {
                     value={selectedProvince}
                     onChange={handleProvinceChange}
                 >
-                    {/* <option key={0} value={0}>Select a Province/Territory</option> */}
                     <option value="">Select a Province/Territory</option>
                     {provinces.map((province, index) => {
                         const words = province.split(" ");
@@ -132,7 +125,7 @@ export default function Home() {
                 </select>
                 <p>Selected Province/Territory: {selectedProvince}</p>
 
-                <CalendarSelector onDateChange={handleDateChange} />
+                <CalendarSelector startDate={startDate} endDate={endDate} onDateChange={handleDateChange} />
 
                 <button className="form__button">
                     Let's Travel, Eh?
@@ -143,13 +136,6 @@ export default function Home() {
 
             {loading && <p>Loading...</p>}
             {error && <p>Error: {error}</p>}
-
-
-            {/* {!showAttractions && attractions.length === 0 && 
-                <p>Sorry, no attractions available for the selected province/territory and/or season. 
-                    Please modify your selection.
-                </p>
-            } */}
 
             {!loading && showAttractions && attractions.length === 0 &&
                 <p>
@@ -175,6 +161,8 @@ export default function Home() {
                     </ul>
                 </>
             )}
+
+            <Footer />  
         </>
     )
 }

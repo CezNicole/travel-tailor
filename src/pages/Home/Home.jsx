@@ -48,7 +48,11 @@ export default function Home() {
     
     const fetchAttractions = async () => {
         setLoading(true);
-        const season = getSeason(startDate);
+
+        let season = getSeason(startDate);
+        if (season !== 'summer' && season !== 'fall') {
+            season = 'all time';
+        }
         
         try {
             const response = await axios.get(`${serverUrl}/api/attractions/${selectedProvince}/${season}`);
@@ -74,6 +78,10 @@ export default function Home() {
             setError(null);
         }
     }
+
+    const handleProvinceClick = (province) => {
+        setSelectedProvince(province);
+    }
     
     const handleDateChange = (dates) => {
         setStartDate(dates[0]);
@@ -83,8 +91,14 @@ export default function Home() {
     const resetForm = () => {
         setSelectedProvince("");
         setAttractions([]);
-        setStartDate(new Date());
-        setEndDate(new Date());
+        // setStartDate(new Date());
+        // setEndDate(new Date());
+
+        const currentDate = new Date();
+        setStartDate(currentDate);
+        setEndDate(currentDate);
+
+
         setShowAttractions(false);
         setError(null);
     }
@@ -113,16 +127,38 @@ export default function Home() {
                 >
                     <option value="">Select a Province/Territory</option>
                     {provinces.map((province, index) => {
-                        const words = province.split(" ");
+                        const words = province.province_territory.split(" ");
                         const capitalizedProvince = words.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
-                        console.log(province);
                         return(
-                            <option key={index} value={province}>
+                            <option key={index} value={province.province_territory}>
                                 {capitalizedProvince}
                             </option>
                         )
                     })}
                 </select>
+
+                {/* converting dropdown to carousel cards */}
+                <section className="carousel">
+                    {provinces.map((province, index) => {
+                        const words = province.province_territory.split(" ");
+                        const capitalizedProvince = words.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+
+                        return(
+                            <div 
+                                key={index} 
+                                onClick={() => handleProvinceClick(province.province_territory)}
+                                className="carousel__item"
+                            >
+                                <h3>{capitalizedProvince}</h3>
+                                {province.image_link && <img src={province.image_link} alt={province.province_territory} />}
+                            </div>
+                        )
+                    })}
+                </section>
+
+
+
+
                 <p>Selected Province/Territory: {selectedProvince}</p>
 
                 <CalendarSelector startDate={startDate} endDate={endDate} onDateChange={handleDateChange} />
@@ -146,7 +182,7 @@ export default function Home() {
 
             {!loading && showAttractions && attractions.length > 0 && (
                 <>
-                    <ul>
+                    {/* <ul>
                         {attractions.map((attraction) => (
                             <li key={attraction.id}>
                                 {attraction.attraction_name}<br></br>
@@ -158,7 +194,21 @@ export default function Home() {
                                 <img src={attraction.image_link} alt={attraction.attraction_name} /><br></br>
                             </li>
                         ))}
-                    </ul>
+                    </ul> */}
+
+                    <section>
+                        {attractions.map((attraction) => (
+                            <div key={attraction.id}>
+                                {attraction.attraction_name}<br></br>
+                                Attraction Type: {attraction.attraction_type}<br></br>
+                                Best Time to Visit: {attraction.best_time_to_visit}<br></br>
+                                Visiting Hours: {attraction.visiting_hours}<br></br>
+                                Address: {attraction.address}<br></br>
+                                Website: <a href={attraction.website_link}>{attraction.website_link}</a><br></br>
+                                <img src={attraction.image_link} alt={attraction.attraction_name} /><br></br>
+                            </div>
+                        ))}
+                    </section>
                 </>
             )}
 

@@ -15,4 +15,9 @@
         color: $white;
         // color: $light-blue;
     }
+
+    &__logo {
+        border-radius: 1rem;
+        width: 30%;
+    }
 }

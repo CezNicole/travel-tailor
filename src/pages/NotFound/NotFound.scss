@@ -1,0 +1,83 @@
+@use "../../styles/partials/breakpoints" as *;
+@use "../../styles/partials/colors" as *;
+@use "../../styles/partials/global" as *;
+
+.not-found {
+    margin: 2rem 0;
+    display: flex;
+    justify-content: center;
+    // background-color: $Mountain-Gray;
+
+    @include tablet {
+        margin: 2rem 10rem;
+    }
+
+    &__notification {
+        padding: 1.5rem 0;
+        border-radius: 0.25rem;
+        box-shadow: rgba(0, 0, 0, 0.137) 0 0.25rem 0.75rem;
+        width: 18rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        @include tablet {
+            width: 21rem;
+        }
+    }
+
+    &__title {
+        margin-bottom: 0.25rem;
+        color: $Mountain-Gray;
+        text-transform: uppercase;
+        font-size: 1.75rem;
+        line-height: 2.25rem;
+
+        @include tablet {
+            font-size: 2rem;
+            line-height: 2.5rem;
+            color: $Mountain-Gray;
+        }
+    }
+
+    &__subtitle {
+        margin-bottom: 2.5rem;
+        font-weight: 400;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        color: $steel;
+
+        @include tablet {
+            font-weight: 400;
+            font-size: 1.5rem;
+            line-height: 2rem;
+            color: $steel;
+        }
+    }
+
+    &__animation {
+        width: 7.5rem;
+        height: 1.375rem;
+        border-radius: 1.25rem;
+        color: $Mountain-Gray;
+        border: 2px solid;
+        position: relative;
+
+        &::before {
+            content: "";
+            position: absolute;
+            margin: 0.125rem;
+            inset: 0 100% 0 0;
+            border-radius: inherit;
+            background: $Mountain-Gray;
+            animation: load 4.5s infinite;
+        }
+    }
+}
+
+@keyframes load {
+    100% {
+        inset: 0
+    }
+}

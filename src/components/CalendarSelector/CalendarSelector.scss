@@ -7,7 +7,7 @@
         width: 100%;
         max-width: 25rem;
         margin: 1rem auto;
-        background-color: $white;
+        background-color: $primary-white;
         border-radius: 0.5rem;
         box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.2);
         display: flex;
@@ -28,7 +28,7 @@
     &__label {
         margin-right: 0.5rem;
         font-weight: bold;
-        color: $Mountain-Gray;
+        color: $mountain-gray;
     }
 
     &__separator {
@@ -37,14 +37,14 @@
 
     &__date {
         font-weight: bold;
-        color: $Lake-Blue;
+        color: $lake-blue;
     }
 }
 
 .react-calendar {
     width: 100%;
-    background-color: $white;
-    color: $Mountain-Gray;
+    background-color: $primary-white;
+    color: $mountain-gray;
     border-radius: 0.5rem;
     box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.2);
     line-height: 1.125rem;
@@ -56,7 +56,7 @@
         margin-bottom: 1rem;
 
         button {
-            color: $Mountain-Gray;
+            color: $mountain-gray;
             min-width: 2.75rem;
             background: none;
             font-size: 1rem;
@@ -69,8 +69,8 @@
 
             &:enabled:hover,
             &:enabled:focus {
-                background-color: $Lake-Blue;
-                color: $yellow;
+                background-color: $lake-blue;
+                color: $primary-yellow;
             }
 
             &:disabled {
@@ -99,8 +99,8 @@
 
         &:enabled:hover,
         &:enabled:focus {
-            background: $Lake-Blue;
-            color: $yellow;
+            background: $lake-blue;
+            color: $primary-yellow;
         }
 
         &--now {
@@ -111,10 +111,10 @@
 
             &:enabled:hover,
             &:enabled:focus {
-                background: $Lake-Blue;
+                background: $lake-blue;
                 border-radius: 0.5rem;
                 font-weight: bold;
-                color: $yellow;
+                color: $primary-yellow;
             }
         }
 
@@ -122,30 +122,30 @@
 
             &:enabled:hover,
             &:enabled:focus {
-                background: $Lake-Blue;
+                background: $lake-blue;
             }
         }
 
         &--active {
-            background: $Lake-Blue;
+            background: $lake-blue;
             border-radius: 0.5rem;
             font-weight: bold;
-            color: $yellow;
+            color: $primary-yellow;
 
             &:enabled:hover,
             &:enabled:focus {
-                background: $Lake-Blue;
-                color: $yellow;
+                background: $lake-blue;
+                color: $primary-yellow;
             }
         }
 
         &--hover {
-            background-color: $Lake-Blue;
+            background-color: $lake-blue;
         }
 
         &--range {
-            background: $Lake-Blue;
-            color: $yellow;
+            background: $lake-blue;
+            color: $primary-yellow;
             border-radius: 0;
         }
 
@@ -154,8 +154,8 @@
             border-bottom-right-radius: 0;
             border-top-left-radius: 0.5rem;
             border-bottom-left-radius: 0.5rem;
-            background: $Lake-Blue;
-            color: $yellow;
+            background: $lake-blue;
+            color: $primary-yellow;
         }
 
         &--rangeEnd {
@@ -163,13 +163,13 @@
             border-bottom-left-radius: 0;
             border-top-right-radius: 0.5rem;
             border-bottom-right-radius: 0.5rem;
-            background: $Lake-Blue;
-            color: $yellow;
+            background: $lake-blue;
+            color: $primary-yellow;
         }
     }
 
     &--selectRange .react-calendar__tile--hover {
-        background-color: $Lake-Blue;
-        color: $yellow;
+        background-color: $lake-blue;
+        color: $primary-yellow;
     }
 }

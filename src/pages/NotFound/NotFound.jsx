@@ -20,8 +20,10 @@ export default function NotFound() {
             <Header />
             <main className="not-found">
                 <div className="not-found__notification">
-                    <h1 className="not-found__title">Page Not Found</h1>
-                    <h2 className="not-found__subtitle">redirecting to homepage</h2>
+                    <h1 className="not-found__title">Looks Like You're Lost!</h1>
+                    {/* <h2 className="not-found__subtitle">redirecting to homepage</h2> */}
+                    <h2 className="not-found__subtitle">Let's get you back on track.</h2>
+
                     <div className="not-found__animation"></div>
                 </div>
             </main>

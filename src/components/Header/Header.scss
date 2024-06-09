@@ -1,23 +1,22 @@
 @use "../../styles/partials/colors" as *;
 @use "../../styles/partials/global" as *;
+@use "../../styles/partials/breakpoints" as *;
 
 .header {
-    // background-color: $red;
-    // background-color: $primary-dark-blue;
     background-color: $steel;
-    padding: 1.5rem 1rem;
+    padding: 2rem;
 
     &__link {
         text-decoration: none;
     }
 
     &__title {
-        color: $white;
-        // color: $light-blue;
+        color: $primary-white;
     }
 
     &__logo {
-        border-radius: 1rem;
-        width: 30%;
+        border-radius: 3rem;
+        width: 8rem;
+        height: auto;
     }
 }

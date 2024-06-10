@@ -9,6 +9,7 @@ import Header from "../../components/Header/Header";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.scss";
 import "slick-carousel/slick/slick-theme.scss";
+import QRCode from "qrcode.react";
 
 export default function Home() {
             
@@ -119,10 +120,30 @@ export default function Home() {
         dots: true,
         infinite: true,
         speed: 500,
-        slidesToShow: 3,
-        slidesToScroll: 4,
+        slidesToShow: 4,
+        slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 3000,
+        responsive: [
+            {
+                breakpoint: 1280,
+                settings: {
+                    slidesToShow: 4,
+                }
+            },
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 4,
+                }
+            },
+            {
+                breakpoint: 768, 
+                settings: {
+                    slidesToShow: 3, 
+                }
+            }
+        ]
     };
 
     return(
@@ -135,6 +156,7 @@ export default function Home() {
 
                 <Slider {...sliderSettings} className="home__carousel">
                     {provinces.map((province, index) => {
+                        console.log(province);
                         const words = province.province_territory.split(" ");
                         const capitalizedProvince = words.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
                         
@@ -195,19 +217,65 @@ export default function Home() {
 
                 {!loading && showAttractions && attractions.length > 0 && (
                     <>
-                        <section>
-                            {attractions.map((attraction) => (
+                        {attractions
+                            .filter(attraction => attraction.website_link && attraction.website_link.trim() !== "")
+                            .map(attraction => (
                                 <div key={attraction.id} className="attraction">
-                                    <h3 className="attraction__title">{attraction.attraction_name}</h3>
-                                    <p className="attraction__description"><b>Attraction Type:</b> {attraction.attraction_type}</p>
-                                    <p className="attraction__description"><b>Best Time to Visit:</b> {attraction.best_time_to_visit}</p>
-                                    <p className="attraction__description"><b>Visiting Hours:</b> {attraction.visiting_hours}</p>
-                                    <p className="attraction__description"><b>Address:</b> {attraction.address}</p>
-                        <p className="attraction__description"><b>Website:</b> <a href={attraction.website_link}>{attraction.website_link}</a></p>
-                                    <img src={attraction.image_link} alt={attraction.attraction_name} className="attraction__image" />
+                                    <div className="attraction__left">
+                                        <div
+                                            className="attraction__image"
+                                            style={{ backgroundImage: `url(${attraction.image_link})` }}
+                                        ></div>
+                                        <div className="attraction__admit-one">
+                                            <span>A</span>
+                                            <span>DMIT ONE</span>
+                                        </div>
+                                        <div className="attraction__ticket-number">
+                                            <p>#{attraction.id}</p>
+                                        </div>
+                                    </div>
+                                    <div className="attraction__info">
+                                        <div className="attraction__date">
+                                            <span>{attraction.best_time_to_visit}</span>
+                                            <span className="attraction__date--title">Date Info</span>
+                                            <span>{attraction.visiting_hours}</span>
+                                        </div>
+                                        <div className="attraction__show-name">
+                                            <h1 className="attraction__name">{attraction.attraction_name}</h1>
+                                        </div>
+                                        <div className="attraction__time">
+                                            <p>Attraction Type: {attraction.attraction_type}</p>
+                                            <span>Additional Info</span>
+                                        </div>
+                                        <div className="attraction__location">
+                                            <p>{attraction.address}</p>
+                                            <span className="separator">|</span>
+                                            <p>
+                                                <a href={attraction.website_link} target="_blank" rel="noreferrer">
+                                                    {attraction.website_link}
+                                                </a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="attraction__right">
+                                        <div className="admit-one">
+                                            <span>A</span>
+                                            <span>DMIT ONE</span>
+                                        </div>
+                                        <div className="right-info-container">
+                                            <div className="show-name">
+                                                <h1>{attraction.attraction_name}</h1>
+                                            </div>
+                                            <div className="barcode">
+                                                <QRCode value={attraction.website_link} size={100} />
+                                            </div>
+                                            <div className="ticket-number">
+                                                <p>#{attraction.id}</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             ))}
-                        </section>
                     </>
                 )}
 

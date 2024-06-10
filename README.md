@@ -1,77 +1,3 @@
-<!-- # Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify) -->
-
-
-
-
 # Project Title
 Travel Tailor
 
@@ -96,9 +22,9 @@ My target users are all types of travellers: newcomers to Canada, solo travelers
 ### Features
 List the functionality that your app will include. These can be written as user stories or descriptions with related details. Do not describe _how_ these features are implemented, only _what_ needs to be implemented.
 
-	• Single page application that contains a form that takes user input for the city/destination and dropdown for the specific travel dates (e.g. 3 days, 7 days, 15 days, 30 days)
+	• Single page application that contains a form that takes user input for the province/territory and a React Calendar component that checks the logic if the selected month falls into the 'summer', 'fall', or 'all time' season.
 	• When user submits the form w/ the Canadian province/territory and travel duration using a button:
-		○ Travel suggestions with recommended places to visit will be displayed in the Travel Recommendations page 
+		○ Travel suggestions with recommended places to visit will be displayed on the same page, just below the form
 	
 
 ## Implementation
@@ -113,6 +39,8 @@ List technologies that will be used in your app, including any libraries to save
 		○ React-router-dom
 		○ Axios
 		○ Npm
+		○ react-slick slick-carousel
+		○ qrcode.react
 	• Server-side libraries:
 		○ Express
 		○ Npm 
@@ -132,12 +60,9 @@ List the pages of your app with brief descriptions. You can show this visually, 
 Home Page
 	• Contains form w/ the following elements:
 		○ Dropdown field for the selected Canadian province / territory
-		○ Dropdown field that contains travel date duration  of 3 days, 7 days, 15 days, or 30 days
+		○ Calendar component that checks the season based on the selected month, and filters the data based on "Best Time To Visit"
 		○ Submit button called "Let's Travel" to trigger data display 
-
-Travel Recommendations Page
-	• When "Let's Travel" button is clicked:
-		○ Travel recommendations for must-visit places will be displayed
+		○ When "Let's Travel" button is clicked, associated tourist attractions will be displayed, based on the selected province / territory
 		
 
 ### Mockups
@@ -155,18 +80,37 @@ See sql-diagram.png
 ### Endpoints
 List endpoints that your server will implement, including HTTP methods, parameters, and example responses.
 
-**GET /recommended_destinations/:id**
-- Get travel recommendations based on the selected province / territory
+**GET /api/provinces**
+- Get Canadian provinces / territories and their associated image link
 
 Response:
 ```
 [
     {
-        "id": 1,
-        "attraction_name": "Niagara Falls",
-        "description": "Niagara Falls, a world-famous natural wonder, straddles the border between Canada and the United States, offering breathtaking views of its massive waterfalls and numerous tourist attractions.",
-        "province_id": 7
-    },
+		"province_territory": "ontario",
+		"image_link": "https://dynamic-media-cdn.tripadvisor.com/media/photo-s/02/9b/f5/a4/filename-629-jpg-thumbnail0.jpg?w=400&h=400&s=1"
+	},
+    ...
+]
+```
+
+**GET /api/attractions/:province_territory/:season**
+- Get tourist attractions based on the selected province / territory and filtered season (based on the calendar month selected)
+
+Response:
+```
+[
+    {
+		"id": 1,
+		"attraction_name": "Ripley's Aquarium of Canada",
+		"attraction_type": "Aquariums",
+		"province_territory": "ontario",
+		"best_time_to_visit": "summer",
+		"visiting_hours": "Sun - Sat 10:00 AM - 8:00 PM",
+		"address": "288 Bremner Boulevard, Toronto, Ontario M5V 3L9 Canada",
+		"website_link": "http://www.ripleyaquariums.com/canada",
+		"image_link": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/07/f0/d6/1e/ripley-s-aquarium-of.jpg?w=400&h=400&s=1"
+	},
     ...
 ]
 ```
@@ -184,7 +128,6 @@ Scope your project as a sprint. Break down the tasks that will need to be comple
 Create Client
 	• React project with routes and boilerplates for:
 		○ Home Page
-		○ Travel Recommendations Page
 
 Create Server
 	• Express project w/ routing and appropriate response codes (200, 400)
@@ -203,4 +146,71 @@ Your project will be marked based on what you committed to in the above document
 		○ Button called "Exchange Money" to convert from origin currency to travel destination currency
 	• Add must-try local food spots w/ the suggested itineraries
 	• Login functionality to make it more personalized
+	• Add Geolocation to identify tourist attractions near the user's location
 
+
+
+## Developer's Installation Guide
+Setting up the React Client:
+1. Open Git Bash or your preferred terminal.
+2. Navigate to the desired directory where you want to create the project:
+3. Clone the React application repository: 
+	git clone https://github.com/CezNicole/ceznicole-comia-travel-tailor.git
+4. Navigate into the newly created React app directory: cd <directory_name>
+5. In your code editor's terminal (Git Bash), install the required dependencies:
+	npm install
+	npm install react-router-dom
+	npm install axios cors express
+	npm install react-slick slick-carousel --> to display the province/territory and its random images in a carousel
+	npm install qrcode.react --> to generate QR code generator based on the attraction's website link
+
+Setting up the Server Side (Node.js, Express):
+1. Open Git Bash or your preferred terminal
+2. Navigate to the desired directory where you want to create the server-side project
+3. Clone the server-side (API) repository:
+	git clone https://github.com/CezNicole/travel-tailor-api.git
+4. Navigate into the newly created server-side directory: cd <directory>
+5. Initialize a new Node.js project: npm init -y
+6. Install the required dependencies:
+	npm install knex mysql2
+	npm install express
+	npm install nodemon cors dotenv
+	npm install axios
+	npx knex init
+7. Setup your .env file, using .env.sample as a guide
+
+Setting up the Database:
+1. In your code editor's terminal (server-side project), install the required dependencies:
+	npm install csvtojson
+2. In your code editor's terminal (server-side project), run the following command to create the attractions.json file: 
+	node csvToJson.js
+3. In your code editor (server-side project), create a new migration file for the attractions table:
+	npx knex migrate:make create_attractions_table
+4. This will create a new migration file in the migrations/ directory. Open the newly created migration file and setup the exports.up and exports.down objects
+5. In your code editor's terminal (server-side project), create a new seed file for the attractions table:
+	npx knex seed:make seed_attractions
+6. This will create a new seed file in the seeds/ directory. Open the newly created seed file and setup the exports.seed object
+7. In your code editor's terminal (server-side project), run the following commands to create the database and seed the data:
+	npx knex migrate:latest
+	npx knex seed:run
+8. Open MySQL Workbench and create a new MySQL database connection.
+   In MySQL Workbench, refresh the schemas, and you should see the newly created database.
+   Open a new SQL file in MySQL Workbench and run the following command to verify the data:
+   	SELECT * FROM attractions;
+
+Link the Server Side with the Client App:
+1. In your code editor's terminal (server-side project), install the required dependencies:
+	npm install axios
+	npm install express cors
+2. Setup your .env file, using .env.sample as a guide
+
+Running the Applications (both client-side and server-side):
+1. Start the server-side application:
+	cd /path/to/travel-tailor-api
+	npm start
+2. In a separate terminal window, start the client-side (React) application:
+	cd /path/to/ceznicole-comia-travel-tailor
+	npm start
+3. The React application should now be running and communicating with the server-side API.
+
+This step-by-step guide covers the setup of the React client, the server-side application (Node.js, Express), the database setup using the Kaggle dataset, and the linking of the server-side and client-side applications. Additionally, it includes other features, such as carousel and QR code generation.

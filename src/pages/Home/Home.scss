@@ -363,6 +363,8 @@
     }
 
     @include tablet {
+        max-width: 63rem;
+
         &__image {
             width: 15rem;
             margin-bottom: 6rem;
@@ -379,7 +381,7 @@
     @include desktop {
         flex-direction: row;
         align-items: unset;
-        width: auto;
+        max-width: 80rem;
 
         &__image {
             width: 15.63rem;

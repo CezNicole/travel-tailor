@@ -379,9 +379,34 @@
     }
 
     @include desktop {
+        // flex-direction: row;
+        // align-items: unset;
+        // width: 100%;
+        // max-width: 80rem;
+
+        // &__image {
+        //     width: 15.63rem;
+        // }
+
+        // &__right {
+        //     // width: 11.25rem;
+        //     width: 10%;
+        //     border-left: 0.06rem dashed $primary-dark-blue;
+        //     border-top: none;
+
+        //     .right-info-container {
+        //         padding: 2rem;
+        //     }
+        // }
+
+
         flex-direction: row;
         align-items: unset;
         max-width: 80rem;
+
+        &__left {
+            width: 25%;
+        }
 
         &__image {
             width: 15.63rem;
